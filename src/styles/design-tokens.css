@@ -1,19 +1,30 @@
 :root {
-  --color-primary: #4A6FA5;
-  --color-secondary: #C84A3E;
+  --color-primary: #3A5A8C;
+  --color-secondary: #B83A2D;
   --color-success: #5B8C5A;
   --color-accent: #8B6F47;
   --color-background: #F5F0E8;
   --color-surface: #FAF7F2;
   --color-text: #2C2C2C;
   --color-text-secondary: #6B6B6B;
+  --color-border: #E8DFD0;
 
-  --font-family-base: 'PingFang SC', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --dai-blue: #3A5A8C;
+  --zhu-red: #B83A2D;
+  --zhu-green: #5B8C5A;
+  --tan-brown: #8B6F47;
+  --mi-white: #F5F0E8;
+  --nuan-white: #FAF7F2;
+  --mo-black: #2C2C2C;
+  --fu-gray: #6B6B6B;
+
+  --font-family-base: 'PingFang SC', 'STKaiti', 'KaiTi', '楷体', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-family-title: 'STKaiti', 'KaiTi', '楷体', 'PingFang SC', system-ui, sans-serif;
   
-  --font-size-title: 20px;
+  --font-size-title: 22px;
   --font-weight-title: 700;
   
-  --font-size-module-title: 16px;
+  --font-size-module-title: 17px;
   --font-weight-module-title: 600;
   
   --font-size-body: 14px;
@@ -24,13 +35,19 @@
 
   --spacing-base: 4px;
   --spacing-module: 16px;
-  --spacing-card-padding: 12px;
+  --spacing-card-padding: 16px;
   --spacing-element: 8px;
 
+  --radius-sm: 6px;
   --radius-card: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
   --radius-tag: 8px;
   --radius-full: 50%;
 
-  --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.08);
-  --shadow-hover: 0 4px 16px rgba(74, 111, 165, 0.12);
+  --shadow-card: 0 2px 12px rgba(58, 90, 140, 0.06);
+  --shadow-hover: 0 8px 24px rgba(58, 90, 140, 0.12);
+  --shadow-modal: 0 12px 40px rgba(0, 0, 0, 0.12);
+  --shadow-inner: inset 0 1px 3px rgba(0, 0, 0, 0.04);
+  --shadow-soft: 0 1px 3px rgba(0, 0, 0, 0.04);
 }

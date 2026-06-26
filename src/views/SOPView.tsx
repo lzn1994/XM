@@ -154,14 +154,14 @@ const SOPView: React.FC = () => {
 
     const dotStyles = {
       completed: 'bg-zhu-green border-zhu-green',
-      current: 'bg-dai-blue border-dai-blue pulse-dot',
+      current: 'bg-zhu-red border-zhu-red pulse-dot',
       locked: 'bg-transparent border-fu-gray border-2',
     };
 
     const lineStyles = {
-      completed: 'bg-zhu-green',
-      current: 'bg-fu-gray',
-      locked: 'bg-fu-gray',
+      completed: 'bg-gradient-to-b from-zhu-green to-zhu-green/50',
+      current: 'bg-gradient-to-b from-zhu-red/50 to-fu-gray/30',
+      locked: 'bg-fu-gray/20',
     };
 
     const textStyles = {
@@ -176,45 +176,56 @@ const SOPView: React.FC = () => {
     return (
       <div
         key={step.id}
-        className={`relative pl-8 pb-4 cursor-pointer transition-all duration-200 ${
-          isLocked ? 'cursor-not-allowed opacity-60' : 'hover:bg-nuan-white hover:rounded-lg'
-        } ${isSelected ? 'bg-nuan-white rounded-lg' : ''}`}
+        className={`relative pl-10 pb-5 cursor-pointer transition-all duration-300 ${
+          isLocked ? 'cursor-not-allowed opacity-60' : 'hover:bg-mi-white/50 hover:rounded-lg'
+        } ${isSelected ? 'bg-mi-white rounded-lg shadow-sm' : ''}`}
         onClick={() => handleStepClick(step.id)}
       >
         <div
-          className={`absolute left-2 top-1 w-4 h-4 rounded-full border-2 flex items-center justify-center ${dotStyles[stepState]}`}
+          className={`absolute left-3 top-1 w-5 h-5 rounded-full border-2 flex items-center justify-center z-10 ${dotStyles[stepState]}`}
         >
           {stepState === 'completed' && (
-            <span className="text-white text-xs">✓</span>
+            <span className="text-white text-[10px] font-bold">✓</span>
           )}
           {stepState === 'locked' && (
-            <span className="text-[10px]">🔒</span>
+            <span className="text-[8px]">🔒</span>
           )}
         </div>
 
+        {isCurrent && (
+          <div className="absolute left-3 top-1 w-5 h-5 rounded-full bg-zhu-red/30 -z-0 pulse-ring" />
+        )}
+
         <div className="flex items-start gap-2">
-          <span className={`text-sm ${textStyles[stepState]} flex-shrink-0`}>
+          <span className={`text-sm ${textStyles[stepState]} flex-shrink-0 font-medium`}>
             {step.id}.
           </span>
-          <span className={`text-sm ${textStyles[stepState]}`}>
+          <span className={`text-sm ${textStyles[stepState]} leading-relaxed`}>
             {step.title}
           </span>
         </div>
 
-        {step.id % 3 !== 0 && step.id < 20 && (
+        {step.id < 20 && (
           <div
-            className={`absolute left-[15px] top-6 w-0.5 h-6 ${lineStyles[stepState]}`}
+            className={`absolute left-[22px] top-7 w-0.5 h-7 ${lineStyles[stepState]}`}
+            style={{
+              background: stepState === 'completed' 
+                ? 'linear-gradient(to bottom, #5B8C5A, rgba(91, 140, 90, 0.3))'
+                : stepState === 'current'
+                ? 'linear-gradient(to bottom, rgba(184, 58, 45, 0.5), rgba(107, 107, 107, 0.2))'
+                : 'rgba(107, 107, 107, 0.15)',
+            }}
           />
         )}
 
         {isCurrent && burstTrigger > 0 && (
-          <div className="absolute left-2 top-1 w-4 h-4">
+          <div className="absolute left-3 top-1 w-5 h-5">
             <ParticleBurst
               trigger={burstTrigger}
               x={50}
               y={50}
               particleCount={12}
-              color="rgba(74, 111, 165, 0.6)"
+              color="rgba(184, 58, 45, 0.6)"
             />
           </div>
         )}
@@ -234,10 +245,10 @@ const SOPView: React.FC = () => {
         <div className="max-w-3xl mx-auto">
           <div className="flex items-center justify-between mb-6">
             <div className="flex items-center gap-4">
-              <span className="text-dai-blue text-title font-bold">
+              <span className="text-dai-blue text-title font-bold font-kai">
                 第 {step.id} 步
               </span>
-              <span className="px-3 py-1 bg-dai-blue/10 text-dai-blue rounded-tag text-helper font-medium">
+              <span className="px-3 py-1 bg-dai-blue/10 text-dai-blue rounded-tag text-helper font-medium font-kai">
                 {step.stage}
               </span>
             </div>
@@ -246,7 +257,10 @@ const SOPView: React.FC = () => {
             </Button>
           </div>
 
-          <h2 className="text-2xl font-bold text-mo-black mb-6">{step.title}</h2>
+          <h2 className="text-2xl font-bold text-mo-black mb-6 font-kai flex items-center gap-3">
+            <span className="w-1.5 h-6 bg-gradient-to-b from-dai-blue to-zhu-green rounded-full" />
+            {step.title}
+          </h2>
 
           {showNianGuide && !isLocked && (
             <div className="flex items-start gap-4 mb-6 animate-fade-in">
@@ -466,15 +480,22 @@ const SOPView: React.FC = () => {
         }
       `}</style>
 
-      <div className="sop-timeline hidden md:block w-72 bg-nuan-white border-r border-fu-gray/10 flex-shrink-0">
-        <div className="p-4 border-b border-fu-gray/10">
-          <h2 className="text-title font-bold text-mo-black">装修SOP流程</h2>
+      <div className="sop-timeline hidden md:block w-72 bg-nuan-white border-r border-ink-light flex-shrink-0 relative">
+        <div className="absolute inset-0 pointer-events-none" style={{
+          backgroundImage: 'radial-gradient(circle at 20% 30%, rgba(58, 90, 140, 0.02) 0%, transparent 50%), radial-gradient(circle at 80% 70%, rgba(91, 140, 90, 0.02) 0%, transparent 50%)'
+        }} />
+        <div className="p-4 border-b border-ink-light relative">
+          <div className="absolute bottom-0 left-4 right-4 h-px bg-gradient-to-r from-transparent via-tan-brown/20 to-transparent" />
+          <h2 className="text-title font-bold text-mo-black font-kai flex items-center gap-2">
+            <span className="text-tan-brown text-sm">❖</span>
+            装修SOP流程
+          </h2>
           <p className="text-helper text-fu-gray mt-1">
             已完成 {sopProgress.completedSteps.length} / 20 步
           </p>
-          <div className="mt-3 w-full bg-fu-gray/20 rounded-full h-2">
+          <div className="mt-3 w-full bg-fu-gray/20 rounded-full h-2 overflow-hidden">
             <div
-              className="bg-zhu-green h-2 rounded-full transition-all duration-500"
+              className="bg-gradient-to-r from-zhu-green to-dai-blue h-2 rounded-full transition-all duration-500"
               style={{
                 width: `${(sopProgress.completedSteps.length / 20) * 100}%`,
               }}
@@ -489,16 +510,14 @@ const SOPView: React.FC = () => {
 
             return (
               <div key={stage.index} className="mb-6">
-                <div className="flex items-center gap-2 mb-3">
-                  <span
-                    className={`text-sm font-semibold ${
-                      isStageUnlocked ? 'text-dai-blue' : 'text-fu-gray'
-                    }`}
-                  >
-                    {isStageUnlocked ? '' : '🔒 '}
+                <div className="flex items-center gap-2 mb-4">
+                  <span className={`text-sm font-bold font-kai ${
+                    isStageUnlocked ? 'text-dai-blue' : 'text-fu-gray'
+                  }`}>
+                    {isStageUnlocked ? '❖ ' : '🔒 '}
                     {stage.name}
                   </span>
-                  <div className="flex-1 h-px bg-fu-gray/20" />
+                  <div className="flex-1 h-px bg-gradient-to-r from-tan-brown/30 via-tan-brown/10 to-transparent" />
                 </div>
                 <div className={isStageUnlocked ? '' : 'opacity-50'}>
                   {stageSteps.map((step) => renderTimelineItem(step))}

@@ -128,36 +128,59 @@ const BudgetView: React.FC = () => {
   }, [usagePercent]);
 
   const CoinProgressRing: React.FC = () => {
-    const size = 220;
-    const strokeWidth = 24;
+    const size = 240;
+    const strokeWidth = 26;
     const radius = (size - strokeWidth) / 2;
     const circumference = 2 * Math.PI * radius;
     const center = size / 2;
 
     const segments = [
-      { ratio: 0.5, color: '#4A6FA5', label: '硬装', amount: budgetBreakdown.categories.hardDecoration.amount },
+      { ratio: 0.5, color: '#3A5A8C', label: '硬装', amount: budgetBreakdown.categories.hardDecoration.amount },
       { ratio: 0.3, color: '#5B8C5A', label: '主材', amount: budgetBreakdown.categories.mainMaterials.amount },
       { ratio: 0.2, color: '#8B6F47', label: '备用', amount: budgetBreakdown.categories.reserve.amount },
     ];
 
-    const progressColor = healthStatus === 'healthy' ? '#5B8C5A' : healthStatus === 'warning' ? '#8B6F47' : '#C84A3E';
+    const progressColor = healthStatus === 'healthy' ? '#5B8C5A' : healthStatus === 'warning' ? '#8B6F47' : '#B83A2D';
 
     return (
       <div className="coin-progress-ring relative flex items-center justify-center">
         <svg width={size} height={size} className="transform -rotate-90">
+          <defs>
+            <linearGradient id="coinBorderGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#E8DFD0" />
+              <stop offset="50%" stopColor="#D4C8B0" />
+              <stop offset="100%" stopColor="#E8DFD0" />
+            </linearGradient>
+            <linearGradient id="innerGlow" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stopColor="#FFFBF5" />
+              <stop offset="100%" stopColor="#F5F0E8" />
+            </linearGradient>
+          </defs>
+          
+          <circle
+            cx={center}
+            cy={center}
+            r={radius + 4}
+            fill="none"
+            stroke="url(#coinBorderGradient)"
+            strokeWidth={3}
+            opacity={0.6}
+          />
+          
           <circle
             cx={center}
             cy={center}
             r={radius}
             fill="none"
-            stroke="#F5F0E8"
+            stroke="#EDE6D8"
             strokeWidth={strokeWidth}
           />
+          
           {(() => {
             let offset = 0;
             return segments.map((seg, i) => {
               const dashLength = circumference * seg.ratio;
-              const gapLength = circumference * 0.01;
+              const gapLength = circumference * 0.008;
               const dashArray = `${dashLength - gapLength} ${circumference - (dashLength - gapLength)}`;
               const element = (
                 <circle
@@ -172,39 +195,65 @@ const BudgetView: React.FC = () => {
                   strokeDashoffset={-offset}
                   strokeLinecap="butt"
                   className="transition-all duration-1000 ease-out"
-                  opacity={0.3}
+                  opacity={0.35}
                 />
               );
               offset += dashLength;
               return element;
             });
           })()}
+          
           <circle
             cx={center}
             cy={center}
-            r={radius - 6}
+            r={radius - 8}
             fill="none"
             stroke={progressColor}
-            strokeWidth={8}
+            strokeWidth={10}
             strokeDasharray={`${circumference * (animatedProgress / 100)} ${circumference}`}
             strokeLinecap="round"
             className="transition-all duration-1000 ease-out"
+            style={{
+              filter: `drop-shadow(0 0 6px ${progressColor}40)`,
+            }}
           />
+          
           <circle
             cx={center}
             cy={center}
-            r={radius - strokeWidth - 8}
-            fill="#FAF7F2"
+            r={radius - strokeWidth - 10}
+            fill="url(#innerGlow)"
             stroke="#E8DFD0"
             strokeWidth={2}
           />
+          
+          <rect
+            x={center - 28}
+            y={center - 28}
+            width={56}
+            height={56}
+            fill="#F5F0E8"
+            stroke="#D4C8B0"
+            strokeWidth={2}
+            rx={4}
+          />
+          <rect
+            x={center - 24}
+            y={center - 24}
+            width={48}
+            height={48}
+            fill="none"
+            stroke="#E8DFD0"
+            strokeWidth={1}
+            rx={2}
+          />
         </svg>
-        <div className="absolute inset-0 flex flex-col items-center justify-center">
-          <div className="text-5xl mb-2">{currentHealth.nianEmotion}</div>
-          <div className="text-title font-bold text-mo-black">
+        <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+          <div className="text-4xl mb-1" style={{ marginTop: '-20px' }}>{currentHealth.nianEmotion}</div>
+          <div className="text-title font-bold text-mo-black font-kai" style={{ marginTop: '30px' }}>
             {animatedProgress.toFixed(0)}%
           </div>
-          <div className="text-helper text-fu-gray mt-1">
+          <div className="text-helper text-fu-gray mt-0.5">
             已使用 ¥{totalUsed.toLocaleString()}
           </div>
         </div>
@@ -229,7 +278,7 @@ const BudgetView: React.FC = () => {
       case 'completed':
         return { bg: 'bg-zhu-green/10', text: 'text-zhu-green', label: '已完成' };
       case 'in-progress':
-        return { bg: 'bg-orange-100', text: 'text-orange-600', label: '采购中' };
+        return { bg: 'bg-tan-brown/10', text: 'text-tan-brown', label: '采购中' };
       case 'not-started':
       default:
         return { bg: 'bg-fu-gray/10', text: 'text-fu-gray', label: '未采购' };
@@ -280,7 +329,11 @@ const BudgetView: React.FC = () => {
 
       <div className="max-w-6xl mx-auto p-4 md:p-6">
         <div className="flex items-center justify-between mb-6">
-          <h1 className="text-title text-mo-black">预算管理</h1>
+          <h1 className="text-title text-mo-black font-kai flex items-center gap-2">
+            <span className="text-tan-brown text-base">❖</span>
+            预算管理
+            <span className="text-tan-brown text-base">❖</span>
+          </h1>
           <Button variant="text" onClick={() => setView('onboarding')}>
             返回首页
           </Button>
@@ -489,7 +542,7 @@ const BudgetView: React.FC = () => {
                           <div className="w-full bg-mi-white rounded-full h-2">
                             <div
                               className={`h-2 rounded-full transition-all duration-700 ${
-                                percent > 90 ? 'bg-zhu-red' : percent > 70 ? 'bg-orange-500' : 'bg-zhu-green'
+                                percent > 90 ? 'bg-zhu-red' : percent > 70 ? 'bg-tan-brown' : 'bg-zhu-green'
                               }`}
                               style={{ width: `${Math.min(percent, 100)}%` }}
                             />
@@ -566,12 +619,12 @@ const BudgetView: React.FC = () => {
                   </div>
                 </div>
               </div>
-              <div className="p-4 bg-orange-50 rounded-card border-l-4 border-orange-400">
+              <div className="p-4 bg-tan-brown/10 rounded-card border-l-4 border-tan-brown">
                 <div className="flex items-start gap-3">
                   <span className="text-xl">💡</span>
                   <div>
-                    <h3 className="text-body font-semibold text-orange-800">年兽建议</h3>
-                    <p className="text-helper text-orange-700 mt-1">
+                    <h3 className="text-body font-semibold text-tan-brown">年兽建议</h3>
+                    <p className="text-helper text-tan-brown mt-1">
                       优先使用备用金，必要时可考虑削减非必要项目，避免超支过多
                     </p>
                   </div>

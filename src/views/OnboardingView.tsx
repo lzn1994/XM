@@ -93,6 +93,10 @@ const OnboardingView: React.FC = () => {
   const [recognitionComplete, setRecognitionComplete] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const messageIdRef = useRef(0);
+  const initializedRef = useRef(false);
+  const styleResultMsgAddedRef = useRef(false);
+  const floorPlanMsgAddedRef = useRef(false);
+  const completeMsgAddedRef = useRef(false);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -103,6 +107,8 @@ const OnboardingView: React.FC = () => {
   }, [messages]);
 
   useEffect(() => {
+    if (initializedRef.current) return;
+    initializedRef.current = true;
     addNianTextMessage('你好呀！我是年兽🐲，欢迎来到「我的宝贝房子」！');
     setTimeout(() => {
       addNianTextMessage('装修是件大事，不过别担心，我会陪着你一步步完成的~');
@@ -161,7 +167,8 @@ const OnboardingView: React.FC = () => {
   };
 
   useEffect(() => {
-    if (phase === 'style_result' && styleResult) {
+    if (phase === 'style_result' && styleResult && !styleResultMsgAddedRef.current) {
+      styleResultMsgAddedRef.current = true;
       setTimeout(() => {
         addNianTextMessage('好啦！测试完成~让我来揭晓你的专属风格！');
       }, 300);
@@ -256,7 +263,8 @@ const OnboardingView: React.FC = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    if (phase === 'floor_plan' && !isRecognizing && !recognitionComplete) {
+    if (phase === 'floor_plan' && !isRecognizing && !recognitionComplete && !floorPlanMsgAddedRef.current) {
+      floorPlanMsgAddedRef.current = true;
       const timer1 = setTimeout(() => {
         addNianTextMessage('最后一步！让我帮你识别一下户型图吧~');
       }, 300);
@@ -271,7 +279,8 @@ const OnboardingView: React.FC = () => {
   }, [phase, isRecognizing, recognitionComplete, startFloorPlanRecognition]);
 
   useEffect(() => {
-    if (phase === 'complete' && styleResult) {
+    if (phase === 'complete' && styleResult && !completeMsgAddedRef.current) {
+      completeMsgAddedRef.current = true;
       dispatch({ type: 'UPDATE_USER_SESSION', payload: { styleResult } });
       dispatch({
         type: 'UPDATE_SOP_PROGRESS',

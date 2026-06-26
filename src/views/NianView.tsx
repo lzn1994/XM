@@ -122,7 +122,16 @@ const NianView: React.FC = () => {
     <div className="flex flex-col lg:flex-row gap-6 h-full">
       <div className="flex-1 flex flex-col">
         <div className="bg-nuan-white rounded-xl overflow-hidden shadow-card relative">
-          <HouseScene currentStep={sopProgress.currentStep} className="house-scene w-full" />
+          <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-dai-blue via-zhu-green to-tan-brown opacity-50 z-10" />
+          <div className="absolute top-2 left-2 w-4 h-4 border-t-2 border-l-2 border-tan-brown/30 z-10" />
+          <div className="absolute top-2 right-2 w-4 h-4 border-t-2 border-r-2 border-tan-brown/30 z-10" />
+          <div className="absolute bottom-2 left-2 w-4 h-4 border-b-2 border-l-2 border-tan-brown/30 z-10" />
+          <div className="absolute bottom-2 right-2 w-4 h-4 border-b-2 border-r-2 border-tan-brown/30 z-10" />
+          <div className="p-3">
+            <div className="rounded-lg overflow-hidden border border-ink-light">
+              <HouseScene currentStep={sopProgress.currentStep} className="house-scene w-full" />
+            </div>
+          </div>
           <div className="absolute bottom-24 left-1/2 -translate-x-1/2 z-10">
             <NianAvatar
               size={140}
@@ -137,30 +146,34 @@ const NianView: React.FC = () => {
           {showDialog && (
             <div className="absolute bottom-44 left-1/2 -translate-x-1/2 z-20 animate-bounce-in">
               <div className="bg-nuan-white px-5 py-3 rounded-2xl shadow-lg border-2 border-dai-blue/20 max-w-xs relative">
+                <div className="absolute -top-2 -left-2 w-3 h-3 border-t-2 border-l-2 border-dai-blue/30" />
+                <div className="absolute -top-2 -right-2 w-3 h-3 border-t-2 border-r-2 border-dai-blue/30" />
                 <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-4 h-4 bg-nuan-white rotate-45 border-r-2 border-b-2 border-dai-blue/20" />
-                <p className="text-body text-mo-black text-center">{currentQuote}</p>
+                <p className="text-body text-mo-black text-center font-kai">{currentQuote}</p>
               </div>
             </div>
           )}
           {showSpiritGain && (
             <div className="absolute top-20 left-1/2 -translate-x-1/2 z-30 animate-float-up pointer-events-none">
-              <div className="text-zhu-green font-bold text-lg">
+              <div className="text-zhu-green font-bold text-lg font-kai">
                 +{spiritGainAmount} ✨
               </div>
             </div>
           )}
         </div>
 
-        <div className="mt-4 bg-nuan-white rounded-xl p-4 shadow-card">
+        <div className="mt-4 bg-nuan-white rounded-xl p-4 shadow-card border border-ink-light relative overflow-hidden">
+          <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-tan-brown/30 to-transparent" />
           <div className="flex items-center justify-between mb-3">
-            <h3 className="text-module-title font-semibold text-mo-black">
+            <h3 className="text-module-title font-semibold text-mo-black font-kai flex items-center gap-2">
+              <span className="w-1 h-4 bg-dai-blue rounded-full" />
               装修进度
             </h3>
             <span className="text-helper text-fu-gray">
               第 {sopProgress.currentStep} / {sopProgress.totalSteps} 步
             </span>
           </div>
-          <div className="w-full bg-mi-white rounded-full h-3 mb-2">
+          <div className="w-full bg-mi-white rounded-full h-3 mb-2 overflow-hidden">
             <div
               className="bg-gradient-to-r from-zhu-green to-dai-blue h-3 rounded-full transition-all duration-500"
               style={{
@@ -170,7 +183,7 @@ const NianView: React.FC = () => {
           </div>
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <span className="px-2 py-1 bg-dai-blue/10 text-dai-blue rounded-tag text-xs font-medium">
+              <span className="px-2 py-1 bg-dai-blue/10 text-dai-blue rounded-tag text-xs font-medium font-kai">
                 {houseStage.name}
               </span>
               <span className="text-helper text-fu-gray">
@@ -179,7 +192,7 @@ const NianView: React.FC = () => {
             </div>
             <button
               onClick={() => setView('sop')}
-              className="text-sm text-dai-blue hover:underline"
+              className="text-sm text-dai-blue hover:underline font-medium"
             >
               查看详情 →
             </button>
@@ -220,13 +233,18 @@ const NianView: React.FC = () => {
         }
       `}</style>
 
-      <div className="bg-nuan-white border-b border-fu-gray/10 px-4 py-3 flex items-center justify-between flex-shrink-0">
-        <h1 className="text-title font-bold text-mo-black">年兽陪伴</h1>
+      <div className="bg-nuan-white border-b border-ink-light px-4 py-3 flex items-center justify-between flex-shrink-0 relative overflow-hidden">
+        <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-tan-brown/30 to-transparent" />
+        <h1 className="text-title font-bold text-mo-black font-kai flex items-center gap-2">
+          <span className="text-tan-brown text-sm">❖</span>
+          年兽陪伴
+          <span className="text-tan-brown text-sm">❖</span>
+        </h1>
         <div className="flex items-center gap-2">
-          <span className="text-sm text-fu-gray">Lv.{nianProgress.level}</span>
-          <div className="w-20 bg-mi-white rounded-full h-2">
+          <span className="text-sm text-fu-gray font-kai">Lv.{nianProgress.level}</span>
+          <div className="w-20 bg-mi-white rounded-full h-2 overflow-hidden">
             <div
-              className="bg-zhu-green h-2 rounded-full transition-all duration-300"
+              className="bg-gradient-to-r from-zhu-green to-dai-blue h-2 rounded-full transition-all duration-300"
               style={{
                 width: `${((nianProgress.spiritPoints % 500) / 500) * 100}%`,
               }}
@@ -255,25 +273,29 @@ const NianView: React.FC = () => {
         </div>
       </div>
 
-      <div className="fixed bottom-0 left-0 right-0 bg-nuan-white border-t border-fu-gray/10 z-40 flex-shrink-0">
+      <div className="fixed bottom-0 left-0 right-0 bg-nuan-white border-t border-ink-light z-40 flex-shrink-0 shadow-[0_-2px_12px_rgba(58,90,140,0.06)]">
+        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-tan-brown/20 to-transparent" />
         <div className="flex justify-around items-center py-2 max-w-lg mx-auto">
           {tabs.map((tab) => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`flex flex-col items-center gap-1 px-4 py-1.5 rounded-lg transition-all ${
+              className={`relative flex flex-col items-center gap-1 px-4 py-1.5 rounded-lg transition-all duration-300 ${
                 activeTab === tab.id
                   ? 'text-dai-blue'
                   : 'text-fu-gray hover:text-mo-black'
               }`}
             >
-              <span className={`text-2xl transition-transform ${
+              {activeTab === tab.id && (
+                <span className="absolute -top-2 left-1/2 -translate-x-1/2 w-10 h-0.5 bg-gradient-to-r from-dai-blue to-zhu-green rounded-full" />
+              )}
+              <span className={`text-2xl transition-all duration-300 ${
                 activeTab === tab.id ? 'scale-110' : ''
               }`}>
                 {tab.icon}
               </span>
               <span className={`text-xs font-medium ${
-                activeTab === tab.id ? 'text-dai-blue' : 'text-fu-gray'
+                activeTab === tab.id ? 'text-dai-blue font-semibold font-kai' : 'text-fu-gray'
               }`}>
                 {tab.label}
               </span>
