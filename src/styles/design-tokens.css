@@ -1,0 +1,36 @@
+:root {
+  --color-primary: #4A6FA5;
+  --color-secondary: #C84A3E;
+  --color-success: #5B8C5A;
+  --color-accent: #8B6F47;
+  --color-background: #F5F0E8;
+  --color-surface: #FAF7F2;
+  --color-text: #2C2C2C;
+  --color-text-secondary: #6B6B6B;
+
+  --font-family-base: 'PingFang SC', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  
+  --font-size-title: 20px;
+  --font-weight-title: 700;
+  
+  --font-size-module-title: 16px;
+  --font-weight-module-title: 600;
+  
+  --font-size-body: 14px;
+  --font-weight-body: 400;
+  
+  --font-size-helper: 12px;
+  --font-weight-helper: 400;
+
+  --spacing-base: 4px;
+  --spacing-module: 16px;
+  --spacing-card-padding: 12px;
+  --spacing-element: 8px;
+
+  --radius-card: 12px;
+  --radius-tag: 8px;
+  --radius-full: 50%;
+
+  --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.08);
+  --shadow-hover: 0 4px 16px rgba(74, 111, 165, 0.12);
+}
