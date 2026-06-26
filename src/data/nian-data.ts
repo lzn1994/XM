@@ -49,39 +49,39 @@ export const equipmentList: Equipment[] = [
 export const houseStages: HouseStage[] = [
   {
     stage: 0,
-    name: '毛坯空房',
-    description: '空荡荡的毛坯房，等待着被装扮',
-    furniture: ['四面白墙', '水泥地面', '裸露管线'],
+    name: '前期准备',
+    description: '毛坯空房，等待设计规划',
+    furniture: ['毛坯空房', '户型分析台（条案）'],
   },
   {
     stage: 1,
     name: '主体拆改',
     description: '拆拆改改，空间格局初见雏形',
-    furniture: ['新建墙体', '建筑垃圾', '安全围挡'],
+    furniture: ['设计图纸', '卷尺', '工具架', '安全告示牌'],
   },
   {
     stage: 2,
     name: '水电改造',
     description: '隐蔽工程进行中，水管电线铺起来',
-    furniture: ['水管线管', '底盒插座', '临时照明'],
+    furniture: ['灯具', '插座', '合同审查台', '质检台'],
   },
   {
     stage: 3,
     name: '泥木工程',
-    description: '瓷砖贴好了，吊顶也架起来了',
-    furniture: ['瓷砖地面', '石膏吊顶', '水泥墙面'],
+    description: '青砖地面铺好，墙面刷白',
+    furniture: ['青砖地面', '白墙', '圈椅', '茶几', '博古架'],
   },
   {
     stage: 4,
     name: '油工安装',
-    description: '墙面刷漆，橱柜木门都装好了',
-    furniture: ['乳胶漆墙面', '定制橱柜', '木门地板'],
+    description: '胡桃木色家具入场，温馨感',
+    furniture: ['胡桃木家具', '格栅隔断', '落地灯', '绿植'],
   },
   {
     stage: 5,
     name: '收尾入住',
-    description: '终于可以入住啦，温馨的家',
-    furniture: ['沙发茶几', '床品灯具', '窗帘绿植'],
+    description: '现代中式雅居，奖杯陈列',
+    furniture: ['书法挂画', '瓷器摆件', '窗花', '奖杯'],
   },
 ];
 

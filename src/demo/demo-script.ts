@@ -85,11 +85,11 @@ export const demoChapters: DemoChapter[] = [
     id: 2,
     title: '风格探测',
     subtitle: '找到你的理想风格',
-    duration: 25,
+    duration: 28,
     beats: [
       {
         id: 'ch2-quiz-start',
-        duration: 4,
+        duration: 5,
         spotlight: {
           selector: '.chat-container',
           shape: 'rect',
@@ -102,7 +102,7 @@ export const demoChapters: DemoChapter[] = [
       },
       {
         id: 'ch2-quiz-q1',
-        duration: 5,
+        duration: 6,
         spotlight: {
           selector: '.quiz-options',
           shape: 'rect',
@@ -128,7 +128,7 @@ export const demoChapters: DemoChapter[] = [
       },
       {
         id: 'ch2-result',
-        duration: 7,
+        duration: 8,
         spotlight: {
           selector: '.style-result',
           shape: 'rect',
@@ -162,7 +162,7 @@ export const demoChapters: DemoChapter[] = [
     id: 3,
     title: 'SOP + AI功能',
     subtitle: '智能装修全流程',
-    duration: 35,
+    duration: 37,
     beats: [
       {
         id: 'ch3-sop-timeline',
@@ -179,7 +179,7 @@ export const demoChapters: DemoChapter[] = [
       },
       {
         id: 'ch3-step-detail',
-        duration: 5,
+        duration: 6,
         spotlight: {
           selector: '.step-detail',
           shape: 'rect',
@@ -205,7 +205,7 @@ export const demoChapters: DemoChapter[] = [
       },
       {
         id: 'ch3-ai-quality',
-        duration: 7,
+        duration: 8,
         spotlight: {
           selector: '.ai-feature-card',
           shape: 'rect',
@@ -328,11 +328,11 @@ export const demoChapters: DemoChapter[] = [
     id: 5,
     title: '年兽养成 + CTA',
     subtitle: '和年兽一起成长',
-    duration: 20,
+    duration: 15,
     beats: [
       {
         id: 'ch5-house-evolution',
-        duration: 6,
+        duration: 4,
         spotlight: {
           selector: '.house-scene',
           shape: 'rect',
@@ -345,7 +345,7 @@ export const demoChapters: DemoChapter[] = [
       },
       {
         id: 'ch5-nian-interact',
-        duration: 5,
+        duration: 4,
         spotlight: {
           selector: '.nian-avatar',
           shape: 'circle',
@@ -358,7 +358,7 @@ export const demoChapters: DemoChapter[] = [
       },
       {
         id: 'ch5-stats',
-        duration: 4,
+        duration: 3,
         spotlight: {
           selector: '.stats-panel',
           shape: 'rect',
@@ -371,7 +371,7 @@ export const demoChapters: DemoChapter[] = [
       },
       {
         id: 'ch5-cta',
-        duration: 5,
+        duration: 4,
         spotlight: {
           position: { x: 0, y: 0, width: 0, height: 0 },
           shape: 'rect',

@@ -491,52 +491,113 @@ const HeroView: React.FC = () => {
                 )}
 
                 {progress >= 80 && (
-                  <g
-                    style={{
-                      opacity: Math.min(1, (progress - 80) / 15),
-                      transform: `translateX(${Math.min(0, (progress - 80) / 20 * 100 - 100)}px)`,
-                    }}
-                  >
-                    <g transform="translate(420, 200)">
-                      <ellipse cx="30" cy="115" rx="35" ry="6" fill="#2C2C2C" opacity="0.15" />
-                      
-                      <rect x="10" y="60" width="40" height="50" rx="8" fill="#C84A3E" />
-                      <rect x="15" y="65" width="30" height="40" rx="5" fill="#D65A4E" />
-                      
-                      <circle cx="30" cy="40" r="25" fill="#D4A574" />
-                      <ellipse cx="30" cy="30" rx="20" ry="12" fill="#E8B884" />
-                      
-                      <polygon points="12,22 18,8 24,22" fill="#C84A3E" />
-                      <polygon points="36,22 42,8 48,22" fill="#C84A3E" />
-                      
-                      <circle cx="22" cy="38" r="3" fill="#2C2C2C" />
-                      <circle cx="38" cy="38" r="3" fill="#2C2C2C" />
-                      <circle cx="23" cy="37" r="1" fill="white" />
-                      <circle cx="39" cy="37" r="1" fill="white" />
-                      
-                      <ellipse cx="30" cy="48" rx="6" ry="4" fill="#A0826D" />
-                      <path d="M 24 48 Q 30 54 36 48" stroke="#2C2C2C" strokeWidth="1.5" fill="none" />
-                      
-                      <path d="M 5 55 Q -5 45 5 35" stroke="#D4A574" strokeWidth="4" fill="none" strokeLinecap="round" />
-                      <path d="M 55 55 Q 65 45 55 35" stroke="#D4A574" strokeWidth="4" fill="none" strokeLinecap="round" />
-                      
-                      <rect x="15" y="108" width="10" height="12" rx="2" fill="#5D4037" />
-                      <rect x="35" y="108" width="10" height="12" rx="2" fill="#5D4037" />
+                  <g>
+                    <g
+                      style={{
+                        opacity: Math.min(1, (progress - 80) / 5),
+                      }}
+                    >
+                      <rect
+                        x="350"
+                        y="130"
+                        width="100"
+                        height="140"
+                        fill="url(#doorGlow)"
+                        opacity="0.8"
+                      />
+                      <defs>
+                        <radialGradient id="doorGlow" cx="50%" cy="50%" r="50%">
+                          <stop offset="0%" stopColor="#FFE4B5" stopOpacity="0.9" />
+                          <stop offset="100%" stopColor="#FFE4B5" stopOpacity="0" />
+                        </radialGradient>
+                      </defs>
                     </g>
 
-                    {progress >= 90 && (
+                    <g
+                      style={{
+                        opacity: progress >= 85 ? Math.min(1, (progress - 85) / 5) : 0,
+                        transform: `translateX(${
+                          progress < 92
+                            ? Math.max(-30, (progress - 92) * 4)
+                            : Math.min(0, (progress - 92) * 12)
+                        }px)`,
+                        transformOrigin: '400px 270px',
+                      }}
+                    >
                       <g
                         style={{
-                          opacity: Math.min(1, (progress - 90) / 8),
-                          transform: `translateY(${Math.max(0, 10 - (progress - 90))}px)`,
+                          transform: progress >= 85 && progress < 92
+                            ? `rotate(${Math.sin((progress - 85) * 1.5) * 8}deg)`
+                            : 'rotate(0deg)',
+                          transformOrigin: '400px 200px',
                         }}
                       >
-                        <g transform="translate(460, 155)">
-                          <rect x="0" y="0" width="120" height="45" rx="8" fill="#FAF7F2" stroke="#4A6FA5" strokeWidth="2" />
-                          <polygon points="20,45 30,55 40,45" fill="#FAF7F2" stroke="#4A6FA5" strokeWidth="2" />
-                          <polygon points="20,45 30,55 40,45" fill="#FAF7F2" />
-                          <text x="60" y="28" textAnchor="middle" fontSize="13" fill="#2C2C2C" fontFamily="PingFang SC">
+                        <g transform="translate(400, 200)">
+                          <ellipse cx="0" cy="85" rx="30" ry="5" fill="#2C2C2C" opacity="0.15" />
+                          
+                          <rect x="-25" y="30" width="50" height="55" rx="10" fill="#C84A3E" />
+                          <rect x="-22" y="33" width="44" height="45" rx="8" fill="#D65A4E" />
+                          
+                          <circle cx="0" cy="10" r="28" fill="#D4A574" />
+                          <ellipse cx="0" cy="0" rx="22" ry="14" fill="#E8B884" />
+                          
+                          <polygon points="-18,-8 -12,-22 -6,-8" fill="#2C2C2C" opacity="0.8" />
+                          <polygon points="18,-8 12,-22 6,-8" fill="#2C2C2C" opacity="0.8" />
+                          
+                          <circle cx="-10" cy="8" r="4" fill="#2C2C2C" />
+                          <circle cx="10" cy="8" r="4" fill="#2C2C2C" />
+                          <circle cx="-9" cy="7" r="1.5" fill="white" />
+                          <circle cx="11" cy="7" r="1.5" fill="white" />
+                          
+                          <ellipse cx="0" cy="18" rx="7" ry="5" fill="#A0826D" />
+                          <path d="M -7 18 Q 0 24 7 18" stroke="#2C2C2C" strokeWidth="2" fill="none" />
+                          
+                          <path d="M -30 25 Q -40 15 -35 5" stroke="#D4A574" strokeWidth="5" fill="none" strokeLinecap="round" />
+                          <path d="M 30 25 Q 40 15 35 5" stroke="#D4A574" strokeWidth="5" fill="none" strokeLinecap="round" />
+                          
+                          <rect x="-18" y="82" width="12" height="15" rx="3" fill="#5D4037" />
+                          <rect x="6" y="82" width="12" height="15" rx="3" fill="#5D4037" />
+
+                          <g
+                            style={{
+                              transform: progress >= 95
+                                ? `rotate(${Math.sin((progress - 95) * 2) * 15 - 20}deg)`
+                                : 'rotate(0deg)',
+                              transformOrigin: '-20px 45px',
+                            }}
+                          >
+                            <ellipse cx="-25" cy="50" rx="8" ry="12" fill="#C84A3E" />
+                          </g>
+                          <g
+                            style={{
+                              transform: progress >= 95
+                                ? `rotate(${-Math.sin((progress - 95) * 2) * 15 + 20}deg)`
+                                : 'rotate(0deg)',
+                              transformOrigin: '20px 45px',
+                            }}
+                          >
+                            <ellipse cx="25" cy="50" rx="8" ry="12" fill="#C84A3E" />
+                          </g>
+                        </g>
+                      </g>
+                    </g>
+
+                    {progress >= 95 && (
+                      <g
+                        style={{
+                          opacity: Math.min(1, (progress - 95) / 4),
+                          transform: `translateY(${Math.max(10, 10 - (progress - 95) * 2)}px)`,
+                        }}
+                      >
+                        <g transform="translate(400, 130)">
+                          <rect x="-80" y="0" width="160" height="55" rx="12" fill="#FAF7F2" stroke="#4A6FA5" strokeWidth="2" />
+                          <polygon points="-15,55 0,70 15,55" fill="#FAF7F2" stroke="#4A6FA5" strokeWidth="2" />
+                          <polygon points="-15,55 0,70 15,55" fill="#FAF7F2" />
+                          <text x="0" y="25" textAnchor="middle" fontSize="13" fill="#2C2C2C" fontFamily="PingFang SC">
                             这就是你未来新家的样子！
+                          </text>
+                          <text x="0" y="45" textAnchor="middle" fontSize="12" fill="#6B6B6B" fontFamily="PingFang SC">
+                            跟着我，一步步把它变成现实吧~
                           </text>
                         </g>
                       </g>

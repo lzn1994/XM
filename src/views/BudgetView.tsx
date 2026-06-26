@@ -51,23 +51,23 @@ const BudgetView: React.FC = () => {
 
   const healthConfig = {
     healthy: {
-      color: 'zhu-green',
+      color: '#5B8C5A',
       label: '预算健康',
       nianEmotion: '😄',
       bgClass: 'bg-zhu-green/10',
       textClass: 'text-zhu-green',
     },
     warning: {
-      color: '#E8A838',
+      color: '#8B6F47',
       label: '预算预警',
-      nianEmotion: '😟',
-      bgClass: 'bg-orange-100',
-      textClass: 'text-orange-600',
+      nianEmotion: '🤔',
+      bgClass: 'bg-tan-brown/10',
+      textClass: 'text-tan-brown',
     },
     danger: {
-      color: 'zhu-red',
+      color: '#C84A3E',
       label: '预算危险',
-      nianEmotion: '😰',
+      nianEmotion: '😱',
       bgClass: 'bg-zhu-red/10',
       textClass: 'text-zhu-red',
     },
@@ -140,7 +140,7 @@ const BudgetView: React.FC = () => {
       { ratio: 0.2, color: '#8B6F47', label: '备用', amount: budgetBreakdown.categories.reserve.amount },
     ];
 
-    const progressColor = healthStatus === 'healthy' ? '#5B8C5A' : healthStatus === 'warning' ? '#E8A838' : '#C84A3E';
+    const progressColor = healthStatus === 'healthy' ? '#5B8C5A' : healthStatus === 'warning' ? '#8B6F47' : '#C84A3E';
 
     return (
       <div className="coin-progress-ring relative flex items-center justify-center">
