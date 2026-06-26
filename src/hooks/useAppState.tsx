@@ -1,8 +1,8 @@
 import React, { createContext, useContext, useReducer, useEffect } from 'react';
 import type { ReactNode } from 'react';
-import type { StyleResult, FloorPlanData, BudgetBreakdown } from '../types';
+import type { StyleResult, FloorPlanData, BudgetBreakdown, NianProgress } from '../types';
 
-export type ViewType = 'onboarding' | 'sop' | 'budget' | 'nian' | 'demo';
+export type ViewType = 'hero' | 'onboarding' | 'sop' | 'budget' | 'nian' | 'demo';
 
 interface UserSession {
   id?: string;
@@ -24,11 +24,7 @@ interface SOPProgress {
   stageUnlockStatus: boolean[];
 }
 
-interface NianProgress {
-  level: number;
-  experience: number;
-  unlockedBadges: string[];
-}
+
 
 interface AppState {
   currentView: ViewType;
@@ -50,7 +46,7 @@ type AppAction =
 const STORAGE_KEY = 'renovation_app_state';
 
 const initialState: AppState = {
-  currentView: 'onboarding',
+  currentView: 'hero',
   userSession: {
     isLoggedIn: false,
     styleResult: null,
@@ -69,8 +65,12 @@ const initialState: AppState = {
   },
   nianProgress: {
     level: 1,
-    experience: 0,
-    unlockedBadges: [],
+    spiritPoints: 0,
+    jadeStones: 100,
+    houseScore: 0,
+    streakDays: 0,
+    equipment: [],
+    emotion: 'happy',
   },
   demoMode: false,
 };

@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useCallback } from 'react';
 import { useAppState } from '../hooks/useAppState';
 import Button from '../components/Button';
 import Card from '../components/Card';
@@ -6,6 +6,7 @@ import NianAvatar from '../components/NianAvatar';
 import FloorPlanRecognition from '../components/ai/FloorPlanRecognition';
 import ContractReview from '../components/ai/ContractReview';
 import QualityInspection from '../components/ai/QualityInspection';
+import { ParticleBurst, SuccessState } from '../components/animations';
 import { sopStages, sopSteps, getStepStatus } from '../data/sop-steps';
 import type { SopStep } from '../types';
 
@@ -15,8 +16,10 @@ const SOPView: React.FC = () => {
   const [selectedStep, setSelectedStep] = useState<number>(sopProgress.currentStep);
   const [showNianGuide, setShowNianGuide] = useState(true);
   const [aiCompleted, setAiCompleted] = useState<Record<number, boolean>>({});
-  const [showCelebration, setShowCelebration] = useState(false);
   const [activeAIModal, setActiveAIModal] = useState<number | null>(null);
+  const [burstTrigger, setBurstTrigger] = useState(0);
+  const [showSuccess, setShowSuccess] = useState(false);
+  const [successData, setSuccessData] = useState({ title: '', reward: 0 });
   const timelineRef = useRef<HTMLDivElement>(null);
   const detailRef = useRef<HTMLDivElement>(null);
 
@@ -34,7 +37,7 @@ const SOPView: React.FC = () => {
     }
   };
 
-  const handleCompleteStep = () => {
+  const handleCompleteStep = useCallback(() => {
     const step = currentStepData;
     if (step.aiTrigger === 'forced' && !aiCompleted[step.id]) {
       return;
@@ -49,10 +52,11 @@ const SOPView: React.FC = () => {
       newStageUnlockStatus[nextStepData.stageIndex] = true;
     }
 
-    const expGain = 10;
-    const newExp = nianProgress.experience + expGain;
-    const expPerLevel = 50;
-    const newLevel = Math.floor(newExp / expPerLevel) + 1;
+    const spiritGain = 100;
+    const newSpirit = nianProgress.spiritPoints + spiritGain;
+    const spiritPerLevel = 500;
+    const newLevel = Math.floor(newSpirit / spiritPerLevel) + 1;
+    const newHouseScore = sopProgress.completedSteps.length * 10 + 10;
 
     dispatch({
       type: 'UPDATE_SOP_PROGRESS',
@@ -67,18 +71,26 @@ const SOPView: React.FC = () => {
       type: 'UPDATE_NIAN_PROGRESS',
       payload: {
         level: newLevel,
-        experience: newExp,
+        spiritPoints: newSpirit,
+        houseScore: newHouseScore,
       },
     });
 
-    setShowCelebration(true);
-    setTimeout(() => setShowCelebration(false), 2000);
+    setBurstTrigger((prev) => prev + 1);
+    setSuccessData({ title: step.title, reward: spiritGain });
+    setShowSuccess(true);
+
+    setTimeout(() => {
+      setShowSuccess(false);
+    }, 2500);
 
     if (nextStep <= 20) {
-      setSelectedStep(nextStep);
-      setShowNianGuide(true);
+      setTimeout(() => {
+        setSelectedStep(nextStep);
+        setShowNianGuide(true);
+      }, 500);
     }
-  };
+  }, [currentStepData, aiCompleted, sopProgress, nianProgress, dispatch]);
 
   const handleAiDetect = (stepId: number) => {
     setActiveAIModal(stepId);
@@ -159,6 +171,7 @@ const SOPView: React.FC = () => {
     };
 
     const isLocked = stepState === 'locked';
+    const isCurrent = stepState === 'current';
 
     return (
       <div
@@ -193,6 +206,18 @@ const SOPView: React.FC = () => {
             className={`absolute left-[15px] top-6 w-0.5 h-6 ${lineStyles[stepState]}`}
           />
         )}
+
+        {isCurrent && burstTrigger > 0 && (
+          <div className="absolute left-2 top-1 w-4 h-4">
+            <ParticleBurst
+              trigger={burstTrigger}
+              x={50}
+              y={50}
+              particleCount={12}
+              color="rgba(74, 111, 165, 0.6)"
+            />
+          </div>
+        )}
       </div>
     );
   };
@@ -205,7 +230,7 @@ const SOPView: React.FC = () => {
     const isLocked = stepState === 'locked';
 
     return (
-      <div ref={detailRef} className="flex-1 overflow-y-auto p-6">
+      <div ref={detailRef} className="step-detail flex-1 overflow-y-auto p-6">
         <div className="max-w-3xl mx-auto">
           <div className="flex items-center justify-between mb-6">
             <div className="flex items-center gap-4">
@@ -246,13 +271,14 @@ const SOPView: React.FC = () => {
             </div>
           )}
 
-          {showCelebration && (
-            <div className="fixed inset-0 pointer-events-none z-50 flex items-center justify-center">
-              <div className="text-center animate-celebration">
-                <div className="text-6xl mb-4">🎉</div>
-                <div className="text-2xl font-bold text-zhu-green">
-                  灵气值 +10
-                </div>
+          {showSuccess && (
+            <div className="fixed inset-0 bg-black/30 flex items-center justify-center z-50 pointer-events-none">
+              <div className="pointer-events-auto">
+                <SuccessState
+                  title="步骤完成！"
+                  description={`「${successData.title}」已完成`}
+                  rewardText={`灵气 +${successData.reward}`}
+                />
               </div>
             </div>
           )}
@@ -271,7 +297,7 @@ const SOPView: React.FC = () => {
             </Card>
 
             <Card title="检查清单">
-              <div className="space-y-2">
+              <div className="checklist-card space-y-2">
                 {step.checklist.map((item, index) => (
                   <div
                     key={index}
@@ -305,7 +331,7 @@ const SOPView: React.FC = () => {
             )}
 
             {step.aiTrigger !== 'none' && (
-              <div className="bg-gradient-to-r from-dai-blue/5 to-zhu-green/5 border border-dai-blue/20 p-5 rounded-card">
+              <div className="ai-feature-card bg-gradient-to-r from-dai-blue/5 to-zhu-green/5 border border-dai-blue/20 p-5 rounded-card">
                 <div className="flex items-center justify-between mb-3">
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 rounded-full bg-dai-blue flex items-center justify-center">
@@ -348,7 +374,7 @@ const SOPView: React.FC = () => {
               <Button
                 variant="primary"
                 size="large"
-                className="w-full py-3 text-lg"
+                className="complete-btn w-full py-3 text-lg"
                 onClick={handleCompleteStep}
                 disabled={step.aiTrigger === 'forced' && !aiCompleted[step.id]}
               >
@@ -381,7 +407,7 @@ const SOPView: React.FC = () => {
   };
 
   return (
-    <div className="flex-1 flex bg-mi-white min-h-screen">
+    <div className="flex-1 flex bg-mi-white min-h-full">
       <style>{`
         @keyframes pulse {
           0%, 100% {
@@ -440,7 +466,7 @@ const SOPView: React.FC = () => {
         }
       `}</style>
 
-      <div className="hidden md:block w-72 bg-nuan-white border-r border-fu-gray/10 flex-shrink-0">
+      <div className="sop-timeline hidden md:block w-72 bg-nuan-white border-r border-fu-gray/10 flex-shrink-0">
         <div className="p-4 border-b border-fu-gray/10">
           <h2 className="text-title font-bold text-mo-black">装修SOP流程</h2>
           <p className="text-helper text-fu-gray mt-1">

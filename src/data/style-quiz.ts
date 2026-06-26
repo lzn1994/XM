@@ -145,23 +145,12 @@ export const styleQuizQuestions: QuizQuestion[] = [
   },
   {
     id: 4,
-    title: '你更喜欢哪种材质质感？',
+    title: '下面这些材质，你更喜欢摸上去的感觉？',
     type: 'single',
     options: [
       {
         id: 'q4-a',
-        label: '微水泥细腻质感',
-        weights: {
-          'modern-chinese': 20,
-          nordic: 10,
-          japanese: 15,
-          luxury: 15,
-          industrial: 30,
-        },
-      },
-      {
-        id: 'q4-b',
-        label: '胡桃木温暖触感',
+        label: '温润胡桃木',
         weights: {
           'modern-chinese': 30,
           nordic: 20,
@@ -171,19 +160,30 @@ export const styleQuizQuestions: QuizQuestion[] = [
         },
       },
       {
+        id: 'q4-b',
+        label: '粗糙微水泥',
+        weights: {
+          'modern-chinese': 20,
+          nordic: 10,
+          japanese: 15,
+          luxury: 15,
+          industrial: 30,
+        },
+      },
+      {
         id: 'q4-c',
-        label: '金属冷峻光泽',
+        label: '柔软亚麻布',
         weights: {
           'modern-chinese': 10,
-          nordic: 5,
-          japanese: 5,
-          luxury: 20,
-          industrial: 40,
+          nordic: 25,
+          japanese: 30,
+          luxury: 10,
+          industrial: 5,
         },
       },
       {
         id: 'q4-d',
-        label: '大理石奢华感',
+        label: '冰凉大理石',
         weights: {
           'modern-chinese': 15,
           nordic: 10,
@@ -228,9 +228,9 @@ export const styleQuizQuestions: QuizQuestion[] = [
 const styleInfo: Record<StyleType, { name: string; tagline: string; tags: string[]; description: string }> = {
   'modern-chinese': {
     name: '现代中式',
-    tagline: '东方韵味，现代演绎',
-    tags: ['禅意', '木质', '对称', '留白'],
-    description: '融合传统中式美学与现代生活方式，以木质格栅、温润色调、对称布局营造宁静雅致的居住氛围。',
+    tagline: '追求静气与秩序的东方生活家',
+    tags: ['留白', '胡桃木', '格栅', '微水泥'],
+    description: '融合传统中式美学与现代生活方式，以留白意境、温润胡桃木、格栅隔断、微水泥质感打造宁静雅致的东方居所。',
   },
   nordic: {
     name: '北欧简约',
@@ -307,7 +307,7 @@ export function calculateStyleResult(answers: Record<number, string>): StyleResu
 export const defaultStyleResult: StyleResult = {
   styleName: '现代中式',
   matchScore: 87,
-  tagline: '东方韵味，现代演绎',
-  tags: ['禅意', '木质', '对称', '留白'],
-  description: '融合传统中式美学与现代生活方式，以木质格栅、温润色调、对称布局营造宁静雅致的居住氛围。',
+  tagline: '追求静气与秩序的东方生活家',
+  tags: ['留白', '胡桃木', '格栅', '微水泥'],
+  description: '融合传统中式美学与现代生活方式，以留白意境、温润胡桃木、格栅隔断、微水泥质感打造宁静雅致的东方居所。',
 };

@@ -71,7 +71,7 @@
   - `human-judgement` TR-4.4: 时间线脉冲动画流畅，步骤卡片布局清晰
 - **Notes**: PC端左侧时间线+右侧详情，移动端折叠为顶部进度条
 
-## [/] Task 5: AI 功能模拟模块
+## [x] Task 5: AI 功能模拟模块
 - **Priority**: high
 - **Depends On**: Task 4
 - **Description**:
@@ -87,7 +87,7 @@
   - `human-judgement` TR-5.3: AI 动画有科技感且符合中式美学
 - **Notes**: 全部使用 CSS 动画 + GSAP 实现，Canvas 用于水墨粒子效果
 
-## [ ] Task 6: 预算管理视图
+## [x] Task 6: 预算管理视图
 - **Priority**: high
 - **Depends On**: Task 2
 - **Description**:
@@ -106,7 +106,7 @@
   - `human-judgement` TR-6.5: 铜钱进度环视觉美观，状态颜色区分明显
 - **Notes**: 铜钱进度环使用 SVG stroke-dasharray 实现分段进度
 
-## [ ] Task 7: 年兽养成视图
+## [x] Task 7: 年兽养成视图
 - **Priority**: high
 - **Depends On**: Task 2
 - **Description**:
@@ -124,7 +124,7 @@
   - `human-judgement` TR-7.4: 年兽动画生动可爱，房子场景有中式韵味
 - **Notes**: 优先用CSS动画实现年兽，复杂粒子用Canvas
 
-## [ ] Task 8: 演示模式
+## [x] Task 8: 演示模式
 - **Priority**: medium
 - **Depends On**: Task 3, Task 4, Task 5, Task 6, Task 7
 - **Description**:
@@ -142,7 +142,7 @@
   - `human-judgement` TR-8.4: 演示节奏流畅，解说与画面同步
 - **Notes**: 使用 DemoActor 类封装演示逻辑，与业务逻辑解耦
 
-## [ ] Task 9: 全局导航与响应式适配
+## [x] Task 9: 全局导航与响应式适配
 - **Priority**: medium
 - **Depends On**: Task 3, Task 4, Task 6, Task 7
 - **Description**:
@@ -158,7 +158,7 @@
   - `human-judgement` TR-9.3: 各断点下内容布局合理，无溢出或重叠
 - **Notes**: 使用 Tailwind 响应式断点，移动优先
 
-## [ ] Task 10: 动画与交互优化
+## [x] Task 10: 动画与交互优化
 - **Priority**: medium
 - **Depends On**: Task 3, Task 4, Task 5, Task 6, Task 7
 - **Description**:
@@ -175,7 +175,7 @@
   - `human-judgement` TR-10.3: 动画风格统一，符合中式美学
 - **Notes**: 使用 GSAP 管理复杂动画时序，requestAnimationFrame 做 Canvas 粒子
 
-## [ ] Task 11: 整体联调与体验优化
+## [x] Task 11: 整体联调与体验优化
 - **Priority**: high
 - **Depends On**: Task 8, Task 9, Task 10
 - **Description**:

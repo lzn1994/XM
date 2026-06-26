@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useAppState } from '../hooks/useAppState';
 import NianAvatar from '../components/NianAvatar';
 import Button from '../components/Button';
@@ -227,18 +227,7 @@ const OnboardingView: React.FC = () => {
     }, 600);
   };
 
-  useEffect(() => {
-    if (phase === 'floor_plan' && !isRecognizing && !recognitionComplete) {
-      setTimeout(() => {
-        addNianTextMessage('最后一步！让我帮你识别一下户型图吧~');
-      }, 300);
-      setTimeout(() => {
-        startFloorPlanRecognition();
-      }, 1200);
-    }
-  }, [phase]);
-
-  const startFloorPlanRecognition = () => {
+  const startFloorPlanRecognition = useCallback(() => {
     setIsRecognizing(true);
     setUploadProgress(0);
 
@@ -264,7 +253,22 @@ const OnboardingView: React.FC = () => {
         return prev + 5;
       });
     }, 100);
-  };
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (phase === 'floor_plan' && !isRecognizing && !recognitionComplete) {
+      const timer1 = setTimeout(() => {
+        addNianTextMessage('最后一步！让我帮你识别一下户型图吧~');
+      }, 300);
+      const timer2 = setTimeout(() => {
+        startFloorPlanRecognition();
+      }, 1200);
+      return () => {
+        clearTimeout(timer1);
+        clearTimeout(timer2);
+      };
+    }
+  }, [phase, isRecognizing, recognitionComplete, startFloorPlanRecognition]);
 
   useEffect(() => {
     if (phase === 'complete' && styleResult) {
@@ -292,7 +296,7 @@ const OnboardingView: React.FC = () => {
 
     if (questionId === 1) {
       return (
-        <div className="grid grid-cols-2 gap-3">
+        <div className="quiz-options grid grid-cols-2 gap-3">
           {question.options.map((option) => (
             <button
               key={option.id}
@@ -309,7 +313,7 @@ const OnboardingView: React.FC = () => {
 
     if (questionId === 5) {
       return (
-        <div className="grid grid-cols-2 gap-3">
+        <div className="quiz-options grid grid-cols-2 gap-3">
           {question.options.map((option) => (
             <button
               key={option.id}
@@ -327,7 +331,7 @@ const OnboardingView: React.FC = () => {
     }
 
     return (
-      <div className="flex flex-col gap-2">
+      <div className="quiz-options flex flex-col gap-2">
         {question.options.map((option) => (
           <button
             key={option.id}
@@ -346,7 +350,7 @@ const OnboardingView: React.FC = () => {
     if (!styleResult) return null;
 
     return (
-      <div className="bg-[var(--color-surface)] rounded-xl p-5 shadow-md">
+      <div className="style-result bg-[var(--color-surface)] rounded-xl p-5 shadow-md">
         <div className="text-center mb-4">
           <div className="text-lg font-semibold text-[var(--color-text)] mb-1">
             你的专属风格
@@ -374,7 +378,7 @@ const OnboardingView: React.FC = () => {
         <p className="text-[var(--color-text-secondary)] text-sm leading-relaxed mb-5">
           {styleResult.description}
         </p>
-        <Button variant="primary" className="w-full" onClick={handleStyleConfirm}>
+        <Button variant="primary" className="style-confirm-btn w-full" onClick={handleStyleConfirm}>
           确认，继续
         </Button>
       </div>
@@ -605,19 +609,20 @@ const OnboardingView: React.FC = () => {
     phase === 'floor_plan' ||
     phase === 'complete';
 
+  const lastPhaseWithOptions = useRef<string | null>(null);
+
   useEffect(() => {
-    if (showOptions) {
-      const hasOptionsMessage = messages.some((m) => m.type === 'options' && m.phase === phase);
-      if (!hasOptionsMessage) {
-        addOptionsMessage(renderOptionsContent(), phase);
-      }
+    if (showOptions && lastPhaseWithOptions.current !== phase) {
+      lastPhaseWithOptions.current = phase;
+      addOptionsMessage(renderOptionsContent(), phase);
     }
-  }, [phase, showOptions, messages]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [phase, showOptions]);
 
   return (
-    <div className="flex-1 flex flex-col bg-[var(--color-background)]">
-      <div className="flex-1 overflow-y-auto px-4 py-6">
-        <div className="max-w-2xl mx-auto space-y-4">
+    <div className="chat-container flex-1 flex flex-col bg-mi-white min-h-full">
+      <div className="flex-1 overflow-y-auto px-4 py-4 lg:py-8">
+        <div className="max-w-2xl mx-auto space-y-4 lg:bg-nuan-white lg:rounded-2xl lg:shadow-card lg:p-6 lg:border lg:border-fu-gray/10">
           {messages.map((message) => (
             <div
               key={message.id}
